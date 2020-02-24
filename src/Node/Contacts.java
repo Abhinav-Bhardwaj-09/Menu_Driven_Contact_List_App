@@ -1,5 +1,5 @@
-package Contact_List_App;
-
+package Node;
+import Contact_List_App.*;
 /*
     Created by Abhinav Bhardwaj on IntelliJ IDEA
     on   24-02-2020 ,  Time :-    18 : 13

@@ -1,6 +1,10 @@
 package Contact_List_App;
 
+import Node.Contacts;
+import Node.Person;
+
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /*
     Created by Abhinav Bhardwaj on IntelliJ IDEA
@@ -16,13 +20,16 @@ public class Main {
         int n;
         boolean fl = true;
         while (fl) {
-            System.out.println("Welcome to Abhinav's Contact List App  ");
+            int p =0;
+            String e = "";
+            System.out.println("Welcome to DBC's Contact List App  ");
             System.out.println("Press 1 to add a new contact.");
             System.out.println("Press 2 to view all contacts.");
             System.out.println("Press 3 to search for a contact");
             System.out.println("Press 4 to delete a contact");
             System.out.println("Press 5 to exit program");
             n = obj.nextInt();
+            int k = 0;
             if (n == 1) {
                 char C;
                 String contact = "";
@@ -36,30 +43,62 @@ public class Main {
                 String L = obj.next();
                 System.out.print("Contact Number: ");
                 contact = obj.next();
-                System.out.print("Would you like to add another contact number? (y/n): ");
-                C = obj.next().charAt(0);
-                int m = 0;
-                while (m == 0) {
-                    if (C == 'y') {
-                        System.out.print("Contact Number: ");
-                        C_N = obj.next();
-                        contact = contact + " , " + C_N;
-                        System.out.print("Would you like to add another contact number? (y/n): ");
-                        C = obj.next().charAt(0);
-                        if (C == 'n') {
-                            m++;
+                if (Pattern.matches("[789]{1}[0-9]{9}", contact)) {
+                    System.out.print("Would you like to add another contact number? (y/n): ");
+                    C = obj.next().charAt(0);
+                    int m = 0;
+                    while (m == 0) {
+                        if (C == 'y') {
+                            System.out.print("Contact Number: ");
+                            C_N = obj.next();
+                            if (Pattern.matches("[789]{1}[0-9]{9}", C_N)) {
+                                contact = contact + " , " + C_N;
+                                System.out.print("Would you like to add another contact number? (y/n): ");
+                                C = obj.next().charAt(0);
+                                if (C == 'n') {
+                                    m++;
+                                }
+                            }
+                            else {
+                                System.out.println();
+                                System.out.println();
+                                System.out.println("Try again and enter a valid contact number...");
+                                System.out.println();
+                                System.out.println();
+                                k++;
+                                m++;
+                                C = 'n';
+                            }
                         }
-                    } else {
-                        break;
+                        else {
+                            break;
+                        }
                     }
+                    if(k == 0) {
+                        System.out.print("Would you like to add email address? ");
+                        C = obj.next().charAt(0);
+                    }
+                    if (C == 'y') {
+                        while (p == 0) {
+                            e = obj.next();
+                            if (Pattern.matches("[A-Za-z0-9+_.-]+@(.+)$", e)) {
+                                emailadd = emailadd + e;
+                                p++;
+                            }
+                            else {
+                                System.out.println("Enter a valid email-id ... ");
+                            }
+                        }
+                    }
+                    Person element = new Person(F, L, contact, emailadd);
+                    objcontacts.addContact(element);
                 }
-                System.out.print("Would you like to add email address? ");
-                C = obj.next().charAt(0);
-                if (C == 'y') {
-                    emailadd = obj.next();
+                else{
+                    System.out.println();
+                    System.out.println("Try again and enter a valid contact number...");
+                    System.out.println();
+                    System.out.println();
                 }
-                Person element = new Person(F, L, contact, emailadd);
-                objcontacts.addContact(element);
             } else if (n == 2) {
                 objcontacts.viewallcontacts();
             } else if (n == 3) {
@@ -73,7 +112,7 @@ public class Main {
                 int item = obj.nextInt();
                 objcontacts.deleteElement(item);
             } else if (n == 5) {
-                System.out.println("Thanks for using Abhinav's Contact List App ");
+                System.out.println("Thanks for using DBC's Contact List App ");
                 fl = false;
             }
         }

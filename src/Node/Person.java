@@ -1,4 +1,5 @@
-package Contact_List_App;
+package Node;
+
 
 /*
     Created by Abhinav Bhardwaj on IntelliJ IDEA
